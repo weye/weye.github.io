@@ -155,7 +155,8 @@ $(document).ready(function(){
 			data : JSON.stringify(inputData),
 			dataType : "json",
 			success : function(){
-					setTimeout('successInfo()', 3000);	
+					$('#info').text("已保存,正在发布,请稍等...");
+					setTimeout("$('#info').text('已保存');var htmlUrl = 'http://weye.github.io' + path;$('#info').after('<a target="_blank" href=' + htmlUrl + '>' + htmlUrl + '</a>');	", 3000);	
 			},
 			error : function(error){
 				$('#saveBtn').show();
@@ -170,11 +171,6 @@ $(document).ready(function(){
 		$('#layoutBtn').hide();
 		$('#info').text("正在保存,请稍等...");
 		
-		function successInfo(){
-			$('#info').text('已保存');
-			var htmlUrl = 'http://weye.github.io' + path;				
-			$('#info').after('<a target="_blank" href=' + htmlUrl + '>' + htmlUrl + '</a>');
-		}
 	})
 });
 </script>
