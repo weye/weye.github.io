@@ -156,7 +156,8 @@ $(document).ready(function(){
 			dataType : "json",
 			success : function(){
 					$('#info').text("已保存,正在发布,请稍等...");
-					setTimeout("$('#info').text('已保存');var htmlUrl = 'http://weye.github.io' + path;$('#info').after('<a target="_blank" href=' + htmlUrl + '>' + htmlUrl + '</a>');	", 3000);	
+					setTimeout("$('#info').text('已保存');var htmlUrl = 'http://weye.github.io' + path; var target = '_blank'; $('#info').after('<a target=' + target + ' ' + href=' + htmlUrl + '>' + htmlUrl + '</a>');",
+					3000);	
 			},
 			error : function(error){
 				$('#saveBtn').show();
