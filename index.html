@@ -156,9 +156,9 @@ $(document).ready(function(){
 			data : JSON.stringify(inputData),
 			dataType : "json",
 			success : function(){
-					$('#info').text("已发布,正在发布,大约4秒,请稍等...");
+					$('#info').text("正在发布,大约4秒,请稍等...");
 					htmlUrl = htmlUrl + path;
-					setTimeout("$('#info').text('已保存  '); var target = '_blank'; $('#info').after('<a target=' + target + ' href=' +  htmlUrl + '>' + htmlUrl + '</a>');",
+					setTimeout("$('#info').text('已发布  '); var target = '_blank'; $('#info').after('<a target=' + target + ' href=' +  htmlUrl + '>' + htmlUrl + '</a>');",
 					4000);	
 			},
 			error : function(error){
