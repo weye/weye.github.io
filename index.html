@@ -156,10 +156,10 @@ $(document).ready(function(){
 			data : JSON.stringify(inputData),
 			dataType : "json",
 			success : function(){
-					$('#info').text("已保存,正在发布,请稍等...");
+					$('#info').text("已保存,正在发布,大约4秒,请稍等...");
 					htmlUrl = htmlUrl + path;
-					setTimeout("$('#info').text('已保存'); var target = '_blank'; $('#info').after('<a target=' + target + ' href=' +  htmlUrl + '>' + htmlUrl + '</a>');",
-					3000);	
+					setTimeout("$('#info').text('已保存  '); var target = '_blank'; $('#info').after('<a target=' + target + ' href=' +  htmlUrl + '>' + htmlUrl + '</a>');",
+					4000);	
 			},
 			error : function(error){
 				$('#saveBtn').show();
@@ -201,9 +201,9 @@ $(document).ready(function(){
 
   <div class="container" id="centerContainer">
     <div class="row">
-      <div class="col-md-1"></div>
-      <div class="col-md-7" ><div id="centerContent" contentEditable=true></div></div>
-      <div class="col-md-4" ><div id="noteContent" contentEditable=true></div></div>
+      <div class="col-md-2"></div>
+      <div class="col-md-8" ><div id="centerContent" contentEditable=true></div></div>
+      <div class="col-md-2" ><div id="noteContent" contentEditable=true></div></div>
     </div>
   </div>
 
