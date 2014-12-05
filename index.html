@@ -6,8 +6,8 @@
 <meta name="description" content="weye">
 <title>weye, your page.</title>
 
-<link href="resources/bootstrap331dist/css/bootstrap.css" rel="stylesheet">
-<link href="resources/foundation-icons/foundation-icons.css" rel="stylesheet">
+<link href="/resources/bootstrap331dist/css/bootstrap.css" rel="stylesheet">
+<link href="/resources/foundation-icons/foundation-icons.css" rel="stylesheet">
 
 <!-- make IE8 support HTML5 elements and media queries -->
 <!--[if lt IE 9]>
@@ -15,8 +15,8 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-<script src="resources/jquery/jquery-1.11.1.min.js"></script>
-<script src="resources/bootstrap331dist/js/bootstrap.min.js"></script>
+<script src="/resources/jquery/jquery-1.11.1.min.js"></script>
+<script src="/resources/bootstrap331dist/js/bootstrap.min.js"></script>
 
 
 <style>
@@ -25,7 +25,7 @@ body{
 overflow-y: scroll;  
 font-family: 'Hiragino Sans GB', 'Microsoft YaHei', 微软雅黑, tahoma, arial, simsun, 宋体;
 padding-top:50px;
-background-image: url("resources/img/bg.png");
+background-image: url("/resources/img/bg.png");
 height:100%;
 }
 
@@ -135,7 +135,7 @@ $(document).ready(function(){
 		var reposUrl = "https://api.github.com/repos/weye/weye.github.io/contents";
 		var token = "?access_token=151cfd67ab425f7f5e5b6993b1dd793542da9907";
 		var date = new Date();
-		var path = "" + date.getYear() + date.getMonth() + date.getDate() + "/"  + (date.getTime() + ".html";
+		var path = "/" + date.getFullYear() + (date.getMonth()+1) + date.getDate() + "/"  + date.getTime() + ".html";
 		// 整个html文档
 		$('#nav').hide();
 		$('[contentEditable]').attr('contentEditable', false);
@@ -155,13 +155,12 @@ $(document).ready(function(){
 			data : JSON.stringify(inputData),
 			dataType : "json",
 			success : function(){
-				$('#info').text("已保存");
-				var htmlUrl = "http://weye.github.io"+path;				
-				$('#info').after('<a target="_blank" href=' + htmlUrl + '>' + htmlUrl + '</a>');				
+					setTimeout('successInfo()', 3000);	
 			},
 			error : function(error){
 				$('#saveBtn').show();
 				$('#layoutBtn').show();
+				$('[contentEditable]').attr('contentEditable', true);
 				$('#info').text("保存失败. " + error.message);
 			}
 		});
@@ -171,7 +170,11 @@ $(document).ready(function(){
 		$('#layoutBtn').hide();
 		$('#info').text("正在保存,请稍等...");
 		
-		
+		function successInfo(){
+			$('#info').text('已保存');
+			var htmlUrl = 'http://weye.github.io' + path;				
+			$('#info').after('<a target="_blank" href=' + htmlUrl + '>' + htmlUrl + '</a>');
+		}
 	})
 });
 </script>
