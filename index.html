@@ -3,211 +3,40 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="description" content="weye">
-<title>weye, your page.</title>
-
-<link href="/resources/bootstrap331dist/css/bootstrap.css" rel="stylesheet">
-<link href="/resources/foundation-icons/foundation-icons.css" rel="stylesheet">
-
-<!-- make IE8 support HTML5 elements and media queries -->
-<!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
-<script src="/resources/jquery/jquery-1.11.1.min.js"></script>
-<script src="/resources/bootstrap331dist/js/bootstrap.min.js"></script>
-
-
+<script src="resources/jquery/jquery-1.11.1.min.js"></script>
 <style>
-
-body{
-overflow-y: scroll;  
-font-family: 'Hiragino Sans GB', 'Microsoft YaHei', 微软雅黑, tahoma, arial, simsun, 宋体;
-padding-top:50px;
-background-image: url("/resources/img/bg.png");
-height:100%;
-}
-
-#nav{
-background-color: white; 
-padding-top: 12px; 
-height: 48px;
-}
-
-#saveBtn{
-outline:none;
-border:0px;
-font-size: 22px;
-padding-left:25px;
-padding-right:25px;
-margin-top:-9px;
-}
-
-#layoutBtn{
-padding-left:50px;
-}
-#layoutBtn span{
-color:gray;
-font-size:20px;
-margin-bottom:-15px;
-}
-#layoutBtn span:hover{
-cursor:pointer;
-color:rgb(224, 97, 232);
-}
-
-
-#fullContent{
-outline:none;
-background-color: #FFFFFF;
-border: 1px solid #cbcbcb;
-box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 8px;
--moz-box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 8px;
--webkit-box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 8px;
--moz-border-radius: 0px;
--webkit-border-radius: 0px;
-border-radius: 0px;
-min-height:400px;
-height:100%;
-display:none;
-}
-
-#centerContainer{
-margin-top:20px;
-}
-#centerContent{
-outline:none;
-padding-top:10px;
-padding-left:10px;
-background-color: #FFFFFF;
-border: 1px solid #cbcbcb;
-box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 8px;
--moz-box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 8px;
--webkit-box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 8px;
--moz-border-radius: 0px;
--webkit-border-radius: 0px;
-border-radius: 0px;
-min-height:400px;
-}
-
-
-#noteContent{
-outline:none;
-padding-top:10px;
-padding-left:10px;
-background-color: #FFFFFF;
-border: 1px solid #cbcbcb;
-box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 8px;
--moz-box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 8px;
--webkit-box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 8px;
--moz-border-radius: 6px;
--webkit-border-radius: 6px;
-border-radius: 6px;
-min-height:400px;
-display:none;
+textarea{
+min-width:300px;
+min-height:200px;
 }
 </style>
-
-<script>
-var htmlUrl = 'http://weye.github.io';
-$(document).ready(function(){
-	$('.fi-arrows-expand').click(function(){
-		$('.fi-arrows-expand').hide();
-		$('.fi-arrows-out').show();
-		$('#noteContent').show();
-	});
-	
-	$('.fi-arrows-out').click(function(){
-		$('.fi-arrows-out').hide();
-		$('.fi-arrows-in').show();
-		$('#centerContent').hide();
-		$('#noteContent').hide();
-		$('#fullContent').show();
-	});
-	$('.fi-arrows-in').click(function(){
-		$('.fi-arrows-in').hide();
-		$('.fi-arrows-expand').show();
-		$('#centerContent').show();
-		$('#noteContent').hide();
-		$('#fullContent').hide();
-	});
-	$('#saveBtn').click(function(){
-		var reposUrl = "https://api.github.com/repos/weye/weye.github.io/contents";
-		var token = "?access_token=151cfd67ab425f7f5e5b6993b1dd793542da9907";
-		var date = new Date();
-		var path = "/" + date.getFullYear() + (date.getMonth()+1) + date.getDate() + "/"  + date.getTime() + ".html";
-		// 整个html文档
-		$('#nav').hide();
-		$('[contentEditable]').attr('contentEditable', false);
-		var content = "<!DOCTYPE html><html>" + $('html').html() + "</html>";		
-		var inputData = {};
-		inputData.message = "my commit message";
-		inputData.committer = {
-			"name" : "n1",
-			"email" : "n2@gmail.com"
-		};
-		// base64编码，参见mdn
-		inputData.content = window.btoa(unescape(encodeURIComponent(content)));
-		$.ajax({
-			type : "put",
-			url : reposUrl + path + token,
-			contentType : "application/json",
-			data : JSON.stringify(inputData),
-			dataType : "json",
-			success : function(){
-					$('#info').text("正在发布,大约4秒,请稍等...");
-					htmlUrl = htmlUrl + path;
-					setTimeout("$('#info').text('已发布  '); var target = '_blank'; $('#info').after('<a target=' + target + ' href=' +  htmlUrl + '>' + htmlUrl + '</a>');",
-					4000);	
-			},
-			error : function(error){
-				$('#saveBtn').show();
-				$('#layoutBtn').show();
-				$('[contentEditable]').attr('contentEditable', true);
-				$('#info').text("保存失败. " + error.message);
-			}
-		});
-		
-		$('#nav').show();
-		$('#saveBtn').hide();
-		$('#layoutBtn').hide();
-		$('#info').text("正在保存,请稍等...");
-		
-	})
-});
-</script>
 </head>
+
 <body>
+<div>
+<textarea id="inputArea">
+</textarea>
+</div>
+<button id="encodeBtn">加密</button>
+<button id="decodeBtn">解密</button>
+<div>
+<textarea id="outputArea">
+</textarea>
+</div>
+<script>
+function utf8_to_b64( str ) {
+    return window.btoa(unescape(encodeURIComponent( str )));
+}
 
-  <div id="nav" class="navbar navbar-default navbar-fixed-top">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-2"></div>
-        <div class="col-md-10">
-          <button id="saveBtn" type="button" class="btn btn-info">保&nbsp;存</button>
-          <span id="layoutBtn">            
-            <span class="fi-arrows-expand" ></span>
-            <span class="fi-arrows-out" style="display:none"></span>
-            <span class="fi-arrows-in" style="display:none"></span>
-          </span>    
-          <span id="info" style="color: #5BC0DE"></span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div id="fullContent" contentEditable=true></div>
-
-  <div class="container" id="centerContainer">
-    <div class="row">
-      <div class="col-md-2"></div>
-      <div class="col-md-8" ><div id="centerContent" contentEditable=true></div></div>
-      <div class="col-md-2" ><div id="noteContent" contentEditable=true></div></div>
-    </div>
-  </div>
-
-
-
+function b64_to_utf8( str ) {
+    return decodeURIComponent(escape(window.atob( str )));
+}
+$('#encodeBtn').click(function(){
+  $('#outputArea').val(utf8_to_b64($('#inputArea').val()));
+});
+$('#decodeBtn').click(function(){
+  $('#outputArea').val(b64_to_utf8($('#inputArea').val()));
+})
+</script>
 </body>
 </html>
